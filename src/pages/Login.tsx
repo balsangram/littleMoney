@@ -184,27 +184,29 @@ const Login = () => {
                                         <div>
                                             <label htmlFor="otp">OTP</label>
                                             <div className="flex gap-2 justify-evenly">
-                                                {[0, 1, 2, 3].map((index) => {
-                                                    const key = `otp${index}` as keyof FormValues;
-                                                    return (
-                                                        <input
-                                                            key={index}
-                                                            id={`otp${index}`}
-                                                            name={`otp${index}`}
-                                                            ref={(el: HTMLInputElement | null) => {
-                                                                if (el) {
-                                                                    inputRefs.current[index] = el;
-                                                                }
-                                                            }}
-                                                            value={formik.values[key]}
-                                                            onChange={(e) => handleChange(e, index)}
-                                                            onKeyDown={(e) => handleKeyDown(e, index)}
-                                                            maxLength={1}
-                                                            className="border rounded p-2 text-center"
-                                                            style={{ fontSize: '20px', width: '50px' }}
-                                                        />
-                                                    );
-                                                })}
+                                            {[0, 1, 2, 3].map((index) => {  
+    const key = `otp${index}` as keyof FormValues;  
+    return (  
+        <input  
+            key={index}  
+            id={`otp${index}`}  
+            name={`otp${index}`}  
+            type="password"  
+            ref={(el: HTMLInputElement | null) => {  
+                if (el) {  
+                    inputRefs.current[index] = el;  
+                }  
+            }}  
+            value={formik.values[key]}  
+            onChange={(e) => handleChange(e, index)}  
+            onKeyDown={(e) => handleKeyDown(e, index)}  
+            maxLength={1}  
+            className="border rounded p-2 text-center"  
+            style={{ fontSize: '20px', width: '50px' }}  
+        />  
+    );  
+})}
+
                                             </div>
                                             {(formik.touched.otp0 || formik.touched.otp1 || formik.touched.otp2 || formik.touched.otp3) &&
                                                 (formik.errors.otp0 || formik.errors.otp1 || formik.errors.otp2 || formik.errors.otp3) && (

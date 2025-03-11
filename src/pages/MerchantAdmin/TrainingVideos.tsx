@@ -41,6 +41,47 @@ const TrainingVideos = () => {
     return (
         <>
             <div className="flex items-center justify-between flex-wrap gap-4">
+
+            <div className="mb-5 p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <h6 className="text-xl font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
+        📄 Download Related Documents
+    </h6>
+    <ul className="list-none space-y-2">
+        <li className="flex items-center gap-2">
+            📌
+            <a 
+                href="/documents/order_guide.pdf" 
+                download 
+                className="text-blue-600 hover:underline font-medium transition duration-300"
+            >
+                Order Process Guide (PDF)
+            </a>
+        </li>
+        <li className="flex items-center gap-2">
+            📌
+            <a 
+                href="/documents/payment_policy.pdf" 
+                download 
+                className="text-blue-600 hover:underline font-medium transition duration-300"
+            >
+                Payment Policy (PDF)
+            </a>
+        </li>
+        <li className="flex items-center gap-2">
+            📌
+            <a 
+                href="/documents/compliance_rules.pdf" 
+                download 
+                className="text-blue-600 hover:underline font-medium transition duration-300"
+            >
+                Compliance Rules & Regulations (PDF)
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+
                 <h2 className="text-xl">Videos</h2>
                 <div className="flex sm:flex-row flex-col sm:items-center sm:gap-3 gap-4 w-full sm:w-auto">
                     <div className="relative">

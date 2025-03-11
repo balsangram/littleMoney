@@ -10,8 +10,8 @@ import IconCaretsDown from '../Icon/IconCaretsDown';
 import IconCaretDown from '../Icon/IconCaretDown';
 import { FiBook, FiBox, FiCreditCard, FiDollarSign, FiFileText, FiGift, FiGrid, FiPlusSquare, FiSettings, FiShoppingBag, FiShoppingCart, FiSquare, FiUsers, FiVideo  ,FiUser } from 'react-icons/fi';
 import { MdOutlineLoyalty } from "react-icons/md";
-import Logo from '../../assets/logo/favicon.ico';
-
+import Logo from '../../assets/logo/logo.png';
+// import Logo from 'src/assets/logo/logo.png'
 const Sidebar = () => {
     const [currentMenu, setCurrentMenu] = useState<string>('');
     const [errorSubMenu, setErrorSubMenu] = useState(false);
@@ -59,9 +59,9 @@ const Sidebar = () => {
             >
                 <div className="bg-white dark:bg-black h-full">
                     <div className="flex justify-between items-center px-4 py-3">
-                        <NavLink to="/" className="main-logo flex items-center shrink-0 justify-center">
-                            <img className="w-8 ml-[5px] flex-none" src={Logo} alt="logo" />
-                            <span className="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light">{t('Little Money')}</span>
+                        <NavLink to="/" className="main-logo  flex items-center shrink-0 justify-center">
+                            <img className="w-8 ml-[5px] w-36 flex-none" src={Logo} alt="logo" />
+                            <span className="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light">{t('')}</span>
                         </NavLink>
 
                         <button
@@ -97,7 +97,7 @@ const Sidebar = () => {
                                             <NavLink to="/merchant/setcustomer" className="group">
                                                 <div className="flex items-center gap-2">
                                                 <FiUsers className="group-hover:!text-primary shrink-0" />
-                                                    <span>{t('Self Entered Customers')}</span>
+                                                    <span>{t('Self Applied Customers')}</span>
                                                 </div>
                                             </NavLink>
                                         </li>
