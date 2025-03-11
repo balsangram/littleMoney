@@ -42,7 +42,7 @@ const TrainingVideos = () => {
         <>
             <div className="flex items-center justify-between flex-wrap gap-4">
 
-            <div className="mb-5 p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <div className="mb-10 p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md ">
     <h6 className="text-xl font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
         📄 Download Related Documents
     </h6>
