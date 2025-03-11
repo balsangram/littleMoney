@@ -11,6 +11,7 @@ import IconCaretDown from '../Icon/IconCaretDown';
 import { FiBook, FiBox, FiCreditCard, FiDollarSign, FiFileText, FiGift, FiGrid, FiPlusSquare, FiSettings, FiShoppingBag, FiShoppingCart, FiSquare, FiUsers, FiVideo  ,FiUser } from 'react-icons/fi';
 import { MdOutlineLoyalty } from "react-icons/md";
 import Logo from '../../assets/logo/logo.png';
+import { FaQuestionCircle } from 'react-icons/fa';
 // import Logo from 'src/assets/logo/logo.png'
 const Sidebar = () => {
     const [currentMenu, setCurrentMenu] = useState<string>('');
@@ -60,7 +61,7 @@ const Sidebar = () => {
                 <div className="bg-white dark:bg-black h-full">
                     <div className="flex justify-between items-center px-4 py-3">
                         <NavLink to="/" className="main-logo  flex items-center shrink-0 justify-center">
-                            <img className="w-8 ml-[5px] w-36 flex-none" src={Logo} alt="logo" />
+                            <img className=" ml-[5px] w-36 flex-none" src={Logo} alt="logo" />
                             <span className="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light">{t('')}</span>
                         </NavLink>
 
@@ -152,7 +153,7 @@ const Sidebar = () => {
                                         <li className="nav-item">
                                             <NavLink to="/merchant/FAQ" className="group">
                                                 <div className="flex items-center gap-2">
-                                                    <FiSettings className="group-hover:!text-primary shrink-0" />
+                                                    <FaQuestionCircle className="group-hover:!text-primary shrink-0" />
                                                     <span>{t('FAQ')}</span>
                                                 </div>
                                             </NavLink>

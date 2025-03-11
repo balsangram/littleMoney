@@ -1,172 +1,174 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setPageTitle } from '../../store/themeConfigSlice';
-import { Link, NavLink } from 'react-router-dom';
-import DataTableComponent from '../../components/common/DataTableComponent';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setPageTitle } from "../../store/themeConfigSlice";
+import { Smartphone, Laptop, Tv, CheckCircle, XCircle } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { motion } from "framer-motion"; // Import Framer Motion
+
 const rowData = [
-    
-        {
-            id: 1,
-            name: 'Priya Verma',
-            phone: '9876543210',
-            'Eligible Price': '15000',
-            Category: 'Mobile',
-            Brand: 'Samsung',
-            Model: 'Galaxy S22',
-            Amount: 75000,
-            'Loan Amount': 50000,
-            Tenure: '12 months',
-            action: 'emi',
-            'Product Price': 60000,
-        },
-        {
-            id: 2,
-            name: 'Amit Sharma',
-            phone: '8765432109',
-            'Eligible Price': '15000',
-            Category: 'Laptop',
-            Brand: 'Dell',
-            Model: 'Inspiron 15',
-            Amount: 60000,
-            'Loan Amount': 40000,
-            Tenure: '24 months',
-            action: 'add',
-            'Product Price': 45000,
-        },
-        {
-            id: 3,
-            name: 'Rohit Singh',
-            phone: '7654321098',
-            'Eligible Price': '15000',
-            Category: 'TV',
-            Brand: 'Sony',
-            Model: 'Bravia 55 inch',
-            Amount: 85000,
-            'Loan Amount': 60000,
-            Tenure: '6 months',
-            action: 'Rejected',
-            'Product Price': 70000,
-        },
-        {
-            id: 4,
-            name: 'Neha Gupta',
-            phone: '6543210987',
-            'Eligible Price': '15000',
-            Category: 'Gadgets',
-            Brand: 'Apple',
-            Model: 'iPad Air',
-            Amount: 50000,
-            'Loan Amount': 30000,
-            Tenure: '3 months',
-            action: 'emi',
-            'Product Price': 35000,
-        },
-        {
-            id: 5,
-            name: 'Vikram Patil',
-            phone: '5432109876',
-            'Eligible Price': '15000',
-            Category: 'Mobile',
-            Brand: 'OnePlus',
-            Model: 'OnePlus 11',
-            Amount: 58000,
-            'Loan Amount': 35000,
-            Tenure: '12 months',
-            action: 'Rejected',
-            'Product Price': 43000,
-        },
-        {
-            id: 6,
-            name: 'Rajesh Nair',
-            phone: '4321098765',
-            'Eligible Price': '15000',
-            Category: 'Laptop',
-            Brand: 'HP',
-            Model: 'Pavilion x360',
-            Amount: 72000,
-            'Loan Amount': 50000,
-            Tenure: '24 months',
-            action: 'add',
-            'Product Price': 57000,
-        },
-        {
-            id: 7,
-            name: 'Anjali Mehta',
-            phone: '3210987654',
-            'Eligible Price': '15000',
-            Category: 'TV',
-            Brand: 'LG',
-            Model: 'OLED 65 inch',
-            Amount: 120000,
-            'Loan Amount': 80000,
-            Tenure: '6 months',
-            action: 'emi',
-            'Product Price': 105000,
-        },
-    
-    // { id: 1, name: 'sibarchan', phone: '6372809867', dob: '23-01-2001', pan: 'CHGPKRIOWN', action: 'add' },
-    // { id: 2, name: 'darshan', phone: '8105055340', dob: '11-01-1999', pan: 'PHGPKUIOWN', action: 'emi' },
-    // { id: 2, name: 'Asutosh', phone: '7867895437', dob: '11-01-1989', pan: 'PHGPKUIUIN', action: 'rejected' },
-];
-const columns = [
-    { accessor: 'id', title: 'ID', sortable: true },
-    { accessor: 'name', title: 'NAME', sortable: true },
-    { accessor: 'phone', title: 'PHONE', sortable: true },
-    { accessor: 'Eligible Price', title: 'ELIGIBLE PRICE', sortable: true },
-    // { accessor: 'Category', title: 'CATEGORY', sortable: true },
-    // { accessor: 'Brand', title: 'BRAND', sortable: true },
-    // { accessor: 'Model', title: 'MODEL', sortable: true },
-    // { accessor: 'Product Price', title: 'PRODUCT PRICE', sortable: true },
-    // { accessor: 'Loan Amount', title: 'LOAN AMOUNT', sortable: true },
-    // { accessor: 'Tenure', title: 'TENURE', sortable: true },
-    // { accessor: 'pan', title: 'PAN NUMBER', sortable: true },
     {
-        accessor: 'action',
-        title: 'ACTIONS',
-        sortable: false,
-        render: ({ id, action }: { id: number; action: string }) => (
-            <div className="flex items-center ">
-                {action == 'add' ? (
-                    <NavLink to="/merchant/orders/add-product-details" className="flex hover:text-info">
-                        <button type="button" className="btn btn-outline-success rounded-full btn-sm">
-                            Add Product Details
-                        </button>
-                    </NavLink>
-                ) : action == 'emi' ? (
-                    <NavLink to="/merchant/orders/view-emi-details" className="flex hover:text-info">
-                        <button type="button" className="btn btn-outline-primary btn-sm rounded-full">
-                            View Emi Details
-                        </button>
-                    </NavLink>
-                ) : (
-                    <button type="button" className="btn btn-outline-danger btn-sm rounded-full">
-                        Rejected
-                    </button>
-                )}
-            </div>
-        ),
+        id: 1,
+        name: "Priya Verma",
+        phone: "9876543210",
+        category: "Mobile",
+        brand: "Samsung",
+        model: "Galaxy S22",
+        loanAmount: 50000,
+        tenure: "12 months",
+        action: "emi",
+        productPrice: 60000,
+    },
+    {
+        id: 2,
+        name: "Amit Sharma",
+        phone: "8765432109",
+        category: "Laptop",
+        brand: "Dell",
+        model: "Inspiron 15",
+        loanAmount: 40000,
+        tenure: "24 months",
+        action: "add",
+        productPrice: 45000,
+    },
+    {
+        id: 3,
+        name: "Rohit Singh",
+        phone: "7654321098",
+        category: "TV",
+        brand: "Sony",
+        model: "Bravia 55 inch",
+        loanAmount: 60000,
+        tenure: "6 months",
+        action: "Rejected",
+        productPrice: 70000,
     },
 ];
+
+const getCategoryIcon = (category) => {
+    switch (category) {
+        case "Mobile":
+            return <Smartphone className="w-5 h-5 text-blue-500" />;
+        case "Laptop":
+            return <Laptop className="w-5 h-5 text-green-500" />;
+        case "TV":
+            return <Tv className="w-5 h-5 text-yellow-500" />;
+        default:
+            return null;
+    }
+};
+
 const SetOrders = () => {
     const dispatch = useDispatch();
+
     useEffect(() => {
-        dispatch(setPageTitle('Orders'));
+        dispatch(setPageTitle("Orders"));
     }, [dispatch]);
+
+    const groupedOrders = {
+        pending: rowData.filter((o) => o.action === "add"),
+        approved: rowData.filter((o) => o.action === "emi"),
+        rejected: rowData.filter((o) => o.action === "Rejected"),
+    };
+
     return (
-        <div>
-            <ul className="flex space-x-2 rtl:space-x-reverse">
-                <li>
-                    <Link to="/merchant" className="text-primary hover:underline">
-                        Dashboard
-                    </Link>
-                </li>
-                <li className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
-                    <span>Orders</span>
-                </li>
-            </ul>
-            <div>
-                <DataTableComponent data={rowData} columns={columns} createPage="/merchant/orders/create" />
-            </div>
+        <div className="p-6 min-h-screen bg-gradient-to-r  to-indigo-100">
+            {/* Breadcrumb Navigation */}
+            <nav className="mb-6">
+                <ul className="flex items-center space-x-2 text-gray-600 text-sm">
+                    <li>
+                        <Link to="/merchant" className="hover:text-blue-600 font-medium">
+                            Dashboard
+                        </Link>
+                    </li>
+                    <li className="text-gray-400">/</li>
+                    <li className="text-blue-600 font-semibold">Orders</li>
+                </ul>
+            </nav>
+
+            {/* Kanban Board Layout */}
+            <motion.div
+                className="grid md:grid-cols-3 gap-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+            >
+                {Object.values(groupedOrders).map((orders, index) => (
+                    <motion.div
+                        key={index}
+                        className="bg-white p-4 shadow-lg rounded-lg border"
+                        initial={{ y: -50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: index * 0.2, duration: 0.6, ease: "easeOut" }}
+                    >
+                        <ul className="space-y-3">
+                            {orders.map((order) => (
+                                <motion.li
+                                    key={order.id}
+                                    className="p-4 bg-gray-100 rounded-md shadow-sm"
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ type: "spring", stiffness: 120 }}
+                                >
+                                    {/* Category Icon & Name */}
+                                    <div className="flex items-center gap-2 mb-2">
+                                        {getCategoryIcon(order.category)}
+                                        <span className="font-medium">{order.name}</span>
+                                    </div>
+
+                                    {/* Order Details */}
+                                    <p className="text-gray-600 text-sm">
+                                        <strong>Brand:</strong> {order.brand}
+                                    </p>
+                                    <p className="text-gray-600 text-sm">
+                                        <strong>Model:</strong> {order.model}
+                                    </p>
+                                    <p className="text-gray-600 text-sm">
+                                        <strong>Loan Amount:</strong> ₹{order.loanAmount}
+                                    </p>
+                                    <p className="text-gray-600 text-sm">
+                                        <strong>Tenure:</strong> {order.tenure}
+                                    </p>
+
+                                    {/* Action Buttons */}
+                                    <div className="mt-3">
+                                        {order.action === "add" ? (
+                                            <NavLink to="/merchant/setcustomer/add-product-details">
+                                                <motion.button
+                                                    className="w-full flex items-center justify-center gap-2 bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <CheckCircle className="w-5 h-5" />
+                                                    Add Product Details
+                                                </motion.button>
+                                            </NavLink>
+                                        ) : order.action === "emi" ? (
+                                            <NavLink to="/merchant/customers/view-emi-details">
+                                                <motion.button
+                                                    className="w-full flex items-center justify-center gap-2 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                                                    whileHover={{ scale: 1.05 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                >
+                                                    <CheckCircle className="w-5 h-5" />
+                                                    View EMI Details
+                                                </motion.button>
+                                            </NavLink>
+                                        ) : (
+                                            <motion.button
+                                                className="w-full flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg cursor-not-allowed"
+                                                whileHover={{ scale: 1.05 }}
+                                            >
+                                                <XCircle className="w-5 h-5" />
+                                                Rejected
+                                            </motion.button>
+                                        )}
+                                    </div>
+                                </motion.li>
+                            ))}
+                        </ul>
+                    </motion.div>
+                ))}
+            </motion.div>
         </div>
     );
 };

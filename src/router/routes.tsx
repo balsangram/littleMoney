@@ -80,6 +80,22 @@ const routes = [
         ),
     },
     {
+        path: '/merchant/setcustomer/add-product-details',
+        element: (
+            <MerchantProtected>
+                <AddProductDetails />
+            </MerchantProtected>
+        ),
+    },
+    {
+        path: '/merchant/setcustomer/view-emi-details',
+        element: (
+            <MerchantProtected>
+                <ViewEmiDetails />
+            </MerchantProtected>
+        ),
+    },
+    {
         path: '/merchant/orders/add-product-details',
         element: (
             <MerchantProtected>

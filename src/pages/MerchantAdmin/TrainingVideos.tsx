@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IconSearch from '../../components/Icon/IconSearch';
 
 const TrainingVideos = () => {
-    const [search, setSearch] = useState<any>('');
-    const [contactList] = useState<any>([
+    const [search, setSearch] = useState('');
+    const [contactList] = useState([
         {
             id: 1,
             youtubelink: 'https://www.youtube.com/embed/AQDiykpGguU',
@@ -18,7 +18,7 @@ const TrainingVideos = () => {
         },
         {
             id: 3,
-            youtubelink: 'https://www.youtube.com/embed/pr3vdlDkY18?si=UNS15B_eQITkTc37',
+            youtubelink: 'https://www.youtube.com/embed/pr3vdlDkY18',
             title: 'SBI',
             description: 'No matter what your financial goals are, your #BFF is always there to support you.',
         },
@@ -29,83 +29,55 @@ const TrainingVideos = () => {
             description: 'FinanciallyEverAfter | What happens when Finance meets Romance?',
         },
     ]);
-    const [filteredItems, setFilteredItems] = useState<any>(contactList);
+    const [filteredItems, setFilteredItems] = useState(contactList);
 
     useEffect(() => {
-        setFilteredItems(() => {
-            return contactList.filter((item: any) => {
-                return item.title.toLowerCase().includes(search.toLowerCase());
-            });
-        });
+        setFilteredItems(
+            contactList.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
+        );
     }, [search, contactList]);
+
     return (
-        <>
-            <div className="flex items-center justify-between flex-wrap gap-4">
-
-            <div className="mb-10 p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md ">
-    <h6 className="text-xl font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
-        📄 Download Related Documents
-    </h6>
-    <ul className="list-none space-y-2">
-        <li className="flex items-center gap-2">
-            📌
-            <a 
-                href="/documents/order_guide.pdf" 
-                download 
-                className="text-blue-600 hover:underline font-medium transition duration-300"
-            >
-                Order Process Guide (PDF)
-            </a>
-        </li>
-        <li className="flex items-center gap-2">
-            📌
-            <a 
-                href="/documents/payment_policy.pdf" 
-                download 
-                className="text-blue-600 hover:underline font-medium transition duration-300"
-            >
-                Payment Policy (PDF)
-            </a>
-        </li>
-        <li className="flex items-center gap-2">
-            📌
-            <a 
-                href="/documents/compliance_rules.pdf" 
-                download 
-                className="text-blue-600 hover:underline font-medium transition duration-300"
-            >
-                Compliance Rules & Regulations (PDF)
-            </a>
-        </li>
-    </ul>
-</div>
-
-
-
-                <h2 className="text-xl">Videos</h2>
-                <div className="flex sm:flex-row flex-col sm:items-center sm:gap-3 gap-4 w-full sm:w-auto">
-                    <div className="relative">
-                        <input type="text" placeholder="Search Videos Name" className="form-input py-2 ltr:pr-11 rtl:pl-11 peer" value={search} onChange={(e) => setSearch(e.target.value)} />
-                        <button type="button" className="absolute ltr:right-[11px] rtl:left-[11px] top-1/2 -translate-y-1/2 peer-focus:text-primary">
-                            <IconSearch className="mx-auto" />
-                        </button>
-                    </div>
+        <div className="container mx-auto p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white">🎥 Training Videos</h2>
+                <div className="relative w-full md:w-96">
+                    <input 
+                        type="text" 
+                        placeholder="Search Videos" 
+                        className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                        value={search} 
+                        onChange={(e) => setSearch(e.target.value)} 
+                    />
+                    <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-500">
+                        <IconSearch />
+                    </button>
                 </div>
             </div>
-            <div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mt-2 w-full">
-                {filteredItems.map((contact: any, index: number) => {
-                    return (
-                        <div key={index} className="bg-white dark:bg-[#1c232f] rounded-md overflow-hidden text-center shadow relative">
-                            <div className="py-3 px-2">
-                                <iframe title="youtube-video" src={contact.youtubelink} className="w-full"></iframe>
-                                <h5 className="text-[#3b3f5c] text-xl font-semibold mb-1 dark:text-white-light">{contact.title}</h5>
-                                <p className="text-white-dark">{contact.description}</p>
-                            </div>
-                        </div>
-                    );
-                })}
+            
+            {/* Document Download Section */}
+            <div className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <h6 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">📄 Download Related Documents</h6>
+                <ul className="space-y-3">
+                    <li><a href="/documents/order_guide.pdf" download className="text-blue-600 hover:underline">📌 Order Process Guide (PDF)</a></li>
+                    <li><a href="/documents/payment_policy.pdf" download className="text-blue-600 hover:underline">📌 Payment Policy (PDF)</a></li>
+                    <li><a href="/documents/compliance_rules.pdf" download className="text-blue-600 hover:underline">📌 Compliance Rules & Regulations (PDF)</a></li>
+                </ul>
             </div>
-        </>
+
+            {/* Video Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredItems.map((video) => (
+                    <div key={video.id} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+                        <iframe title={video.title} src={video.youtubelink} className="w-full h-56"></iframe>
+                        <div className="p-4">
+                            <h5 className="text-lg font-bold text-gray-800 dark:text-white">{video.title}</h5>
+                            <p className="text-gray-600 dark:text-gray-300">{video.description}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 

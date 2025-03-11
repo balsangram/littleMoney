@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Accordion, AccordionItem, AccordionItemButton, AccordionItemHeading, AccordionItemPanel } from 'react-accessible-accordion';
 // import QR from '../../../../assets/QR/Loan-Apply.png";
 import QR from '../../../../src/assets/QR/Loan-Apply.png';
-import QRCodeGenerate from '../../form/QRCodeGenerate';
 
 const MySwal = withReactContent(Swal);
 
@@ -154,9 +153,40 @@ const AddProductDetails = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        const requiredloan: number = Number(formData.requireloanAmount);
+        const eligibleAmount: number = formData.eligibleloanAmount;
+        const loanAmount: number = Number(formData.loanAmount);
+        const minAmount: number = 1000;
+
         if (!validateForm()) {
             return;
         }
+
+        // if (requiredloan > eligibleAmount || requiredloan > loanAmount) {
+        //     Swal.fire({
+        //         title: 'Requested loan amount cannot exceed the eligible or available loan limit.',
+        //         icon: 'error',
+        //         toast: true,
+        //         position: 'top-right',
+        //         showConfirmButton: false,
+        //         timer: 3000,
+        //         showCloseButton: true,
+        //     });
+        //     return;
+        // }
+
+        // if (requiredloan < minAmount) {
+        //     Swal.fire({
+        //         title: 'Minimum loan amount required: ₹1000.',
+        //         icon: 'error',
+        //         toast: true,
+        //         position: 'top-right',
+        //         showConfirmButton: false,
+        //         timer: 3000,
+        //         showCloseButton: true,
+        //     });
+        //     return;
+        // }
 
         showMessage();
 
@@ -168,7 +198,7 @@ const AddProductDetails = () => {
     };
 
     return (
-        <div className='mb-4'>
+        <div>
             <ul className="flex space-x-2 rtl:space-x-reverse">
                 <li>
                     <Link to="/merchant" className="text-primary hover:underline">
@@ -184,168 +214,182 @@ const AddProductDetails = () => {
                     <span>Add Product Details</span>
                 </li>
             </ul>
-            <div className=''>
-                <h3 className="text-xl my-4 ">
-                    Name : <span className="text-lg">Amit Sharma</span>{' '}
-                </h3>
-                <h3 className="text-xl my-4">
-                    Phone : <span className="text-lg">+91 8978764327</span>{' '}
-                </h3>
+
+            <div className="min-w-screen">
+                <table className="border-collapse border border-gray-300 w-full max-w-md text-left">
+                    <tbody>
+                        <tr className="border border-gray-300">
+                            <td className="p-2 font-semibold">Name</td>
+                            <td className="p-2">Amit Sharma</td>
+                        </tr>
+                        <tr className="border border-gray-300">
+                            <td className=" font-semibold">Phone</td>
+                            <td className="p-2">+91 8978764327</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
-                <h2 className="text-2xl">Product Details</h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="category">Category</label>
-                        <select
-                            id="category"
-                            className={`form-input w-full border ${errors.category ? 'border-red-500' : 'border-gray-300'}`}
-                            value={formData.category}
-                            onChange={handleChange}
-                            // required
-                        >
-                            <option value="">--Select Category--</option>
-                            {rowData.map((item, index) => (
-                                <option key={index} value={item.Category}>
-                                    {item.Category}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.category && <span className="text-red-500">{errors.category}</span>}
-                    </div>
+                <div className="bg-white p-6 rounded-lg shadow-md">
 
-                    <div>
-                        <label htmlFor="brand">Brand</label>
-                        <select
-                            id="brand"
-                            className={`form-input w-full border ${errors.brand ? 'border-red-500' : 'border-gray-300'}`}
-                            value={formData.brand}
-                            onChange={handleChange}
+                    <h2 className="text-2xl mb-2">Product Details</h2>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <label htmlFor="category">Category</label>
+                            <select
+                                id="category"
+                                className={`form-input w-full border ${errors.category ? 'border-red-500' : 'border-gray-300'}`}
+                                value={formData.category}
+                                onChange={handleChange}
                             // required
-                        >
-                            <option value="">--Select Brand--</option>
-                            {rowData.map((item, index) => (
-                                <option key={index} value={item.Brand}>
-                                    {item.Brand}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.brand && <span className="text-red-500">{errors.brand}</span>}
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="model">Model</label>
-                        <select
-                            id="model"
-                            className={`form-input w-full border ${errors.model ? 'border-red-500' : 'border-gray-300'}`}
-                            value={formData.model}
-                            onChange={handleChange}
-                            // required
-                        >
-                            <option value="">--Select Model--</option>
-                            {rowData.map((item, index) => (
-                                <option key={index} value={item.Model}>
-                                    {item.Model}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.model && <span className="text-red-500">{errors.model}</span>}
-                    </div>
-
-                    <div>
-                        <label htmlFor="loanAmount">Product Price</label>
-                        <input
-                            type="number"
-                            id="loanAmount"
-                            value={formData.loanAmount}
-                            onChange={handleChange}
-                            placeholder="Product Price..."
-                            className={`form-input w-full border ${errors.loanAmount ? 'border-red-500' : 'border-gray-300'}`}
-                            // required
-                        />
-                        {errors.loanAmount && <span className="text-red-500">{errors.loanAmount}</span>}
-                    </div>
-                    <div>
-                        <label htmlFor="serialNo">Serial Number</label>
-                        <input
-                            type="number"
-                            id="serialNo"
-                            value={formData.serialNo}
-                            onChange={handleChange}
-                            placeholder="Enter Serial Number..."
-                            className={`form-input w-full border ${errors.serialNo ? 'border-red-500' : 'border-gray-300'}`}
-                            // required
-                        />
-                        {errors.serialNo && <span className="text-red-500">{errors.serialNo}</span>}
-                    </div>
-                </div>
-                <h2 className="text-2xl">Loan details</h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="requireloanAmount">
-                            Required loan Amount <span className="text-gray-500">( Minimum ₹ 1000 )</span>
-                        </label>
-                        <input
-                            type="number"
-                            id="requireloanAmount"
-                            name="requireloanAmount"
-                            value={formData.requireloanAmount}
-                            onChange={handleChange}
-                            placeholder="Loan Amount..."
-                            className={`form-input w-full border ${errors.requireloanAmount ? 'border-red-500' : 'border-gray-300'}`}
-                            // required
-                        />
-                        {errors.requireloanAmount && <span className="text-red-500">{errors.requireloanAmount}</span>}
-                    </div>
-
-                    <div>
-                        <label className="text-base mt-8 text-green-500" htmlFor="eligibleloanAmount">
-                            Eligible Loan Amount ₹ {formData.eligibleloanAmount}
-                        </label>
-                        {/* <p className="p-2 bg-gray-200 pl-5 rounded-md">{formData.eligibleloanAmount}</p> */}
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-gray-700 font-medium">Tenure</label>
-                        <div className="flex flex-wrap gap-4 mt-2">
-                            {tenureOptions.map((option, index) => (
-                                <label key={index} className="flex items-center space-x-2">
-                                    <input
-                                        type="radio"
-                                        name="tenure"
-                                        value={option}
-                                        checked={formData.tenure === option}
-                                        onChange={() => handleTenureChange(option)}
-                                        className="form-radio text-blue-600"
-                                    />
-                                    <span>{option}</span>
-                                </label>
-                            ))}
+                            >
+                                <option value="">--Select Category--</option>
+                                {rowData.map((item, index) => (
+                                    <option key={index} value={item.Category}>
+                                        {item.Category}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.category && <span className="text-red-500">{errors.category}</span>}
                         </div>
-                        {errors.tenure && <span className="text-red-500">{errors.tenure}</span>}
-                        {formData.tenure && <p className="mt-3 text-green-600 font-semibold">Your approx. EMI for the selected tenure is ₹ {formData.emi}</p>}
+
+                        <div>
+                            <label htmlFor="brand">Brand</label>
+                            <select
+                                id="brand"
+                                className={`form-input w-full border ${errors.brand ? 'border-red-500' : 'border-gray-300'}`}
+                                value={formData.brand}
+                                onChange={handleChange}
+                            // required
+                            >
+                                <option value="">--Select Brand--</option>
+                                {rowData.map((item, index) => (
+                                    <option key={index} value={item.Brand}>
+                                        {item.Brand}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.brand && <span className="text-red-500">{errors.brand}</span>}
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <label htmlFor="model">Model</label>
+                            <select
+                                id="model"
+                                className={`form-input w-full border ${errors.model ? 'border-red-500' : 'border-gray-300'}`}
+                                value={formData.model}
+                                onChange={handleChange}
+                            // required
+                            >
+                                <option value="">--Select Model--</option>
+                                {rowData.map((item, index) => (
+                                    <option key={index} value={item.Model}>
+                                        {item.Model}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.model && <span className="text-red-500">{errors.model}</span>}
+                        </div>
+
+                        <div>
+                            <label htmlFor="loanAmount">Product Price</label>
+                            <input
+                                type="number"
+                                id="loanAmount"
+                                value={formData.loanAmount}
+                                onChange={handleChange}
+                                placeholder="Product Price..."
+                                className={`form-input w-full border ${errors.loanAmount ? 'border-red-500' : 'border-gray-300'}`}
+                            // required
+                            />
+                            {errors.loanAmount && <span className="text-red-500">{errors.loanAmount}</span>}
+                        </div>
+                        <div>
+                            <label htmlFor="serialNo">Serial Number</label>
+                            <input
+                                type="number"
+                                id="serialNo"
+                                value={formData.serialNo}
+                                onChange={handleChange}
+                                placeholder="Enter Serial Number..."
+                                className={`form-input w-full border ${errors.serialNo ? 'border-red-500' : 'border-gray-300'}`}
+                            // required
+                            />
+                            {errors.serialNo && <span className="text-red-500">{errors.serialNo}</span>}
+                        </div>
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary mt-6 w-full lg:w-auto">
-                    Submit
-                </button>
+                <div className="bg-white p-6 rounded-lg shadow-md">
+
+                    <h2 className="text-2xl mb-2">Loan details</h2>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <label htmlFor="requireloanAmount">
+                                Required loan Amount <span className="text-gray-500">( Minimum ₹ 1000 )</span>
+                            </label>
+                            <input
+                                type="number"
+                                id="requireloanAmount"
+                                name="requireloanAmount"
+                                value={formData.requireloanAmount}
+                                onChange={handleChange}
+                                placeholder="Loan Amount..."
+                                className={`form-input w-full border ${errors.requireloanAmount ? 'border-red-500' : 'border-gray-300'}`}
+                            // required
+                            />
+                            {errors.requireloanAmount && <span className="text-red-500">{errors.requireloanAmount}</span>}
+                        </div>
+
+                        <div>
+                            <label className="text-base mt-8 text-green-500" htmlFor="eligibleloanAmount">
+                                Eligible Loan Amount ₹ {formData.eligibleloanAmount}
+                            </label>
+                            {/* <p className="p-2 bg-gray-200 pl-5 rounded-md">{formData.eligibleloanAmount}</p> */}
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-gray-700 font-medium">Tenure</label>
+                            <div className="flex flex-wrap gap-4 mt-2">
+                                {tenureOptions.map((option, index) => (
+                                    <label key={index} className="flex items-center space-x-2">
+                                        <input
+                                            type="radio"
+                                            name="tenure"
+                                            value={option}
+                                            checked={formData.tenure === option}
+                                            onChange={() => handleTenureChange(option)}
+                                            className="form-radio text-blue-600"
+                                        />
+                                        <span>{option}</span>
+                                    </label>
+                                ))}
+                            </div>
+                            {errors.tenure && <span className="text-red-500">{errors.tenure}</span>}
+                            {formData.tenure && <p className="mt-3 text-green-600 font-semibold">Your approx. EMI for the selected tenure is ₹ {formData.emi}</p>}
+                        </div>
+                    </div>
+
+                    <button type="submit" className="btn btn-primary mt-6 w-full lg:w-auto">
+                        Submit
+                    </button>
+                </div>
+
             </form>
 
             <Accordion style={{ border: 'none', marginTop: '3rem' }}>
                 {showQR && (
-                   
                     <AccordionItem>
                         <AccordionItemHeading>
                             <AccordionItemButton>Scan to Process</AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
-                            <QRCodeGenerate />
                             <div className="flex flex-wrap md:flex-row   flex-col justify-center gap-5 md:gap-28 items-center">
                                 <div className="flex justify-center items-center mt-9">
                                     <img src={QR} alt="Loan Apply QR Code" className="w-48 h-48 object-contain" />
