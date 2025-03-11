@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Accordion, AccordionItem, AccordionItemButton, AccordionItemHeading, AccordionItemPanel } from 'react-accessible-accordion';
 // import QR from '../../../../assets/QR/Loan-Apply.png";
 import QR from '../../../../src/assets/QR/Loan-Apply.png';
+import QRCodeGenerate from '../../form/QRCodeGenerate';
 
 const MySwal = withReactContent(Swal);
 
@@ -153,40 +154,9 @@ const AddProductDetails = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const requiredloan: number = Number(formData.requireloanAmount);
-        const eligibleAmount: number = formData.eligibleloanAmount;
-        const loanAmount: number = Number(formData.loanAmount);
-        const minAmount: number = 1000;
-
         if (!validateForm()) {
             return;
         }
-
-        // if (requiredloan > eligibleAmount || requiredloan > loanAmount) {
-        //     Swal.fire({
-        //         title: 'Requested loan amount cannot exceed the eligible or available loan limit.',
-        //         icon: 'error',
-        //         toast: true,
-        //         position: 'top-right',
-        //         showConfirmButton: false,
-        //         timer: 3000,
-        //         showCloseButton: true,
-        //     });
-        //     return;
-        // }
-
-        // if (requiredloan < minAmount) {
-        //     Swal.fire({
-        //         title: 'Minimum loan amount required: ₹1000.',
-        //         icon: 'error',
-        //         toast: true,
-        //         position: 'top-right',
-        //         showConfirmButton: false,
-        //         timer: 3000,
-        //         showCloseButton: true,
-        //     });
-        //     return;
-        // }
 
         showMessage();
 
@@ -198,7 +168,7 @@ const AddProductDetails = () => {
     };
 
     return (
-        <div>
+        <div className='mb-4'>
             <ul className="flex space-x-2 rtl:space-x-reverse">
                 <li>
                     <Link to="/merchant" className="text-primary hover:underline">
@@ -214,13 +184,14 @@ const AddProductDetails = () => {
                     <span>Add Product Details</span>
                 </li>
             </ul>
-
-            <h3 className="text-2xl my-4">
-                Name : <span className="text-lg">Amit Sharma</span>{' '}
-            </h3>
-            <h3 className="text-2xl my-4">
-                Phone : <span className="text-lg">+91 8978764327</span>{' '}
-            </h3>
+            <div className=''>
+                <h3 className="text-xl my-4 ">
+                    Name : <span className="text-lg">Amit Sharma</span>{' '}
+                </h3>
+                <h3 className="text-xl my-4">
+                    Phone : <span className="text-lg">+91 8978764327</span>{' '}
+                </h3>
+            </div>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
                 <h2 className="text-2xl">Product Details</h2>
@@ -368,11 +339,13 @@ const AddProductDetails = () => {
 
             <Accordion style={{ border: 'none', marginTop: '3rem' }}>
                 {showQR && (
+                   
                     <AccordionItem>
                         <AccordionItemHeading>
                             <AccordionItemButton>Scan to Process</AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
+                            <QRCodeGenerate />
                             <div className="flex flex-wrap md:flex-row   flex-col justify-center gap-5 md:gap-28 items-center">
                                 <div className="flex justify-center items-center mt-9">
                                     <img src={QR} alt="Loan Apply QR Code" className="w-48 h-48 object-contain" />

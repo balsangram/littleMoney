@@ -38,18 +38,19 @@ import ResponsiveButton from './ButtonProps';
 
 interface ButtonProps {
     setIsOpen: (open: boolean) => void;
-  }  
+}
 
 const Header = () => {
+    const score = 45;
     // const [isOpen, setIsOpen] = useState(false);
     const [loyalty, setLoyalty] = useState(45);
     const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
 
     useEffect(() => {
         const handleResize = () => setScreenSize(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-      }, []);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     function openFunction() {
         setIsOpen(false);
@@ -77,7 +78,7 @@ const Header = () => {
             showCloseButton: true,
         });
     }
-  
+
     const [isOpen, setIsOpen] = useState(false);
     const modalRef = useRef(null);
 
@@ -155,19 +156,27 @@ const Header = () => {
             <div className="shadow-sm">
                 {/* =================================== */}
                 {isOpen && (
-                    <div className="fixed inset-0  flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300">
-                        <div ref={modalRef} className="bg-white rounded-lg shadow-xl p-6 w-80 text-center transform scale-95 animate-fadeIn transition-transform duration-300">
-                            <h2 className="text-lg font-bold text-gray-800">Loyalty Points</h2>
-                            <p className="text-gray-600 mt-2">You have 45 loyalty points.</p>
-                          
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 ">
+                        <div ref={modalRef} className="bg-white rounded-lg shadow-xl p-6 w-80 text-center transform scale-95 animate-fadeIn transition-transform duration-300 bg-blue-200">
+                            <h2 className="text-2xl font-bold text-gray-800 my-4 mb-8">Loyalty Points</h2>
+                            <p className="text-gray-600 text-md mt-2">You have {score} loyalty points.</p>
+
                             <div className="flex items-center justify-center h-[5rem] my-3">
-                                <SwipeButton onSwipe={() => {
-                                    alert('Congratulations! Points Credited Successfully.')
-                                }} />
+                                <SwipeButton
+                                    score={score} // Pass the score as a prop
+                                    // onSwipe={() => {
+                                    //     if (score >= 500) {
+                                    //         alert('Congratulations! Points Credited Successfully.');
+                                    //     } else {
+                                    //         alert('not! Points Credited Successfully.');
+                                    //     }
+                                    // }}
+                                />
                             </div>
                         </div>
                     </div>
                 )}
+
                 {/* ====================================== */}
                 <div className="relative bg-white flex w-full items-center px-5 py-2.5 dark:bg-black">
                     <div className="horizontal-logo flex lg:hidden justify-between items-center ltr:mr-2 rtl:ml-2">
@@ -187,31 +196,8 @@ const Header = () => {
 
                     <div className=" sm:flex-1 ltr:sm:ml-0 ltr:ml-auto sm:rtl:mr-0 rtl:mr-auto flex items-center space-x-1.5 lg:space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
                         <div className="sm:ltr:mr-auto sm:rtl:ml-auto"></div>
-                      
-                      {screenSize >= 720  ? 
-                        <button
-                            className="flex items-center text-white font-bold outline-none px-4 py-2 rounded-md relative text-xl gap-4 cursor-pointer bg-[#0052cc] hover:bg-[#003d99] hover:scale-105 duration-300"
-                            onClick={() => setIsOpen(true)}
-                        >
-                            <span
-                                className=""
-                                style={{
-                                    content: "''",
-                                    position: 'absolute',
-                                    left: '-17px',
-                                    top: '0',
-                                    width: '20px',
-                                    height: '100%',
-                                    background: 'linear-gradient(135deg, #0052cc, #003d99)',
-                                    clipPath: 'polygon(100% 0, 0% 50%, 100% 100%)',
-                                }}
-                            />
-                            <img height={15} width={15} src="/assets/images/icon/coin.png" alt="" />
 
-                            <span>Loyalty 45</span>
-                            {/* Loyalty 45 */}
-                        </button>
-:
+                 
                         <button
                             className="flex items-center text-white font-bold outline-none px-2 py-2 rounded-md relative text-xl  cursor-pointer bg-[#0052cc] hover:bg-[#003d99] hover:scale-105 duration-300"
                             onClick={() => setIsOpen(true)}
@@ -229,13 +215,13 @@ const Header = () => {
                                     clipPath: 'polygon(100% 0, 0% 50%, 100% 100%)',
                                 }}
                             />
-                            <img style={{ height: "1.5rem" ,width: "1.5rem"}} src="/assets/images/icon/coin.png" alt="" />
+                            <img style={{ height: '1.5rem', width: '1.5rem' }} src="/assets/images/icon/coin.png" alt="" />
 
                             {screenSize >= 720 && <span>Loyalty 45</span>}
-                            {/* Loyalty 45 */}
+                           
                         </button>
 
-                            }
+                        
 
                         <div>
                             {themeConfig.theme === 'light' ? (

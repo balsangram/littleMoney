@@ -86,7 +86,7 @@ const Login = () => {
             const otp = `${values.otp0}${values.otp1}${values.otp2}${values.otp3}`;
 
             if (values.contactNo === '9876543210' || values.contactNo === '0123456789') {
-                if (otp === '1234') {
+                if (otp === '6246') {
                     if (values.contactNo === '9876543210') {
                         dispatch(
                             setUser({

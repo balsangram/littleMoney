@@ -8,6 +8,7 @@ import Header from './Header';
 import Setting from './Setting';
 import Sidebar from './Sidebar';
 import Portals from '../../components/Portals';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
@@ -15,7 +16,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
 
     const [showLoader, setShowLoader] = useState(true);
     const [showTopButton, setShowTopButton] = useState(false);
-    const [support , setSuppopr] = useState(false)
+    const [support, setSuppopr] = useState(false);
 
     const goToTop = () => {
         document.body.scrollTop = 0;
@@ -29,6 +30,10 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
             setShowTopButton(false);
         }
     };
+
+    function WhatsappSupport() {
+        setSuppopr(!support);
+    }
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollHandler);
@@ -66,18 +71,46 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
                     </div>
                 )}
                 <div className="fixed bottom-6 ltr:right-6 rtl:left-6 z-50">
-                <button type="button" className="btn btn-outline-primary rounded-full p-2 animate-pulse bg-[#fafafa] dark:bg-[#060818] dark:hover:bg-green-500" 
-                // onClick={}
-                >
-                        ?
+                {support ? (
+    <div className="absolute bg-green-600 text-white p-4 rounded-lg w-64 shadow-lg 
+                    right-12 bottom-11  flex flex-col items-start">
+        {/* Triangle Pointer - Aligned Right */}
+        <div className="absolute -right-2 top-14 w-0 h-0 
+                        border-l-8 border-l-green-600 
+                        border-t-8 border-b-8 border-transparent">
+        </div>
+
+        <p className="text-lg font-semibold">WhatsApp Support</p>
+        <p className="text-md font-bold">No: <span className="font-medium">+91 9876432118</span></p>
+    </div>
+) : null}
+
+
+                    <button
+                        type="button"
+                        className="border flex items-center gap-2 px-2 py-2 mb-2 rounded-full 
+               bg-[#25D366] text-white font-semibold shadow-lg
+               hover:bg-[#1DA851] transition-all duration-300 ease-in-out animate-pulse"
+                        onClick={WhatsappSupport}
+                    >
+                        <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                fillRule="evenodd"
+                                d="M12 1.999c-5.523 0-10 4.477-10 10 0 1.736.444 3.377 1.208 4.81L2 22l5.422-1.282C8.872 21.25 10.36 22 12 22c5.523 0 10-4.477 10-10s-4.477-10-10-10Zm-.726 2.024c4.551-.377 8.362 3.362 8.362 7.976 0 4.39-3.582 7.976-7.976 7.976-1.462 0-2.834-.385-4.024-1.067L4 19.051l1.428-3.359c-.872-1.234-1.38-2.765-1.38-4.398 0-4.47 3.856-8.275 8.226-7.271Zm.568 4.562c-.223-.009-.472-.02-.728.187-.256.207-.841.82-1.028 1.15-.187.33-.384.482-.214.854.17.371.64 1.057.77 1.194.129.137.568.783 1.36 1.13.792.348 1.237.453 1.5.38.264-.072.84-.372 1.022-.82.183-.448.213-.828.149-.906-.064-.078-.24-.129-.5-.24s-1.236-.607-1.428-.773c-.193-.166-.365-.349-.272-.551.092-.202.413-.717.557-.94.144-.224.192-.369.028-.54-.165-.172-.522-.601-.717-.763-.195-.163-.398-.201-.62-.211Zm1.573 4.624Z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
                     </button>
-                    {showTopButton && (
+
+                    {showTopButton ? (
                         <button type="button" className="btn btn-outline-primary rounded-full p-2 animate-pulse bg-[#fafafa] dark:bg-[#060818] dark:hover:bg-primary" onClick={goToTop}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 7l4-4m0 0l4 4m-4-4v18" />
                             </svg>
                         </button>
-                    )}
+                    ) :
+                    <div className='h-8'> </div>
+                    }
                 </div>
 
                 {/* BEGIN APP SETTING LAUNCHER */}

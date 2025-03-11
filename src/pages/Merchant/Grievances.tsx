@@ -17,7 +17,7 @@ const MerchantSupport = () => {
         dispatch(setPageTitle('Support'));
     });
     return (
-        <div>
+        <div className='mb-16'>
             <ul className="flex space-x-2 rtl:space-x-reverse">
                 <li>
                     <Link to="/merchant/dashboard" className="text-primary hover:underline">
@@ -39,6 +39,25 @@ const MerchantSupport = () => {
                             <label htmlFor="query">Query</label>
                             <textarea id="query" rows={2} placeholder="Enter Query" className="form-textarea resize-none min-h-[70px]"></textarea>
                         </div>
+                        <div className="mb-5 flex flex-col">
+                            <label htmlFor="myfile" className="mb-2 font-medium text-gray-700">
+                                Upload File
+                            </label>
+
+                            <input
+                                type="file"
+                                id="myfile"
+                                name="myfile"
+                                className="block w-full text-sm text-gray-500
+                   file:mr-4 file:py-2 file:px-4
+                   file:rounded-lg file:border-0
+                   file:text-sm file:font-semibold
+                   file:bg-green-500 file:text-white
+                   hover:file:bg-green-600
+                   focus:outline-none"
+                            />
+                        </div>
+
                         <button type="button" className="btn btn-primary mt-2">
                             Create
                         </button>
