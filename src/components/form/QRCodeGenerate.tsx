@@ -1,6 +1,7 @@
 import React from 'react';
 // import QR from '../../../assets/QR/Loan-Apply.png';
 import QR from '../../../src/assets/QR/Loan-Apply.png';
+import Copy from '../../../src/assets/icons/copy.png';
 
 const QRCodeGenerate: React.FC = () => {
   const copyToClipboard = (text: string) => {
@@ -19,7 +20,7 @@ const QRCodeGenerate: React.FC = () => {
             onClick={() => copyToClipboard('#')}
             className="flex gap-2 px-4 py-2 rounded-lg border border-gray-600 hover:bg-gray-100 transition"
           >
-            <img height={10} width={20} src="/src/assets/icons/copy.png" alt="Copy" />
+            <img height={10} width={20} src={Copy} alt="Copy" />
             Copy Link
           </button>
           <button

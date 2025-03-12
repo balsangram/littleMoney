@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Accordion, AccordionItem, AccordionItemButton, AccordionItemHeading, AccordionItemPanel } from 'react-accessible-accordion';
 // import QR from '../../../../assets/QR/Loan-Apply.png";
 import QR from '../../../../src/assets/QR/Loan-Apply.png';
+import QRCodeGenerate from '../../form/QRCodeGenerate';
 
 const MySwal = withReactContent(Swal);
 
@@ -198,7 +199,7 @@ const AddProductDetails = () => {
     };
 
     return (
-        <div>
+        <div className='mb-8'>
             <ul className="flex space-x-2 rtl:space-x-reverse">
                 <li>
                     <Link to="/merchant" className="text-primary hover:underline">
@@ -383,14 +384,15 @@ const AddProductDetails = () => {
 
             </form>
 
-            <Accordion style={{ border: 'none', marginTop: '3rem' }}>
+            <Accordion style={{ border: 'none', marginTop: '1rem' }}>
                 {showQR && (
                     <AccordionItem>
                         <AccordionItemHeading>
                             <AccordionItemButton>Scan to Process</AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
-                            <div className="flex flex-wrap md:flex-row   flex-col justify-center gap-5 md:gap-28 items-center">
+                            <QRCodeGenerate />
+                            {/* <div className="flex flex-wrap md:flex-row   flex-col justify-center gap-5 md:gap-28 items-center">
                                 <div className="flex justify-center items-center mt-9">
                                     <img src={QR} alt="Loan Apply QR Code" className="w-48 h-48 object-contain" />
                                 </div>
@@ -407,7 +409,7 @@ const AddProductDetails = () => {
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </AccordionItemPanel>
                     </AccordionItem>
                 )}

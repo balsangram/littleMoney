@@ -98,7 +98,7 @@ const Sidebar = () => {
                                             <NavLink to="/merchant/setcustomer" className="group">
                                                 <div className="flex items-center gap-2">
                                                 <FiUsers className="group-hover:!text-primary shrink-0" />
-                                                    <span>{t('Self Applied Customers')}</span>
+                                                    <span>{t('Self Applied')}</span>
                                                 </div>
                                             </NavLink>
                                         </li>
