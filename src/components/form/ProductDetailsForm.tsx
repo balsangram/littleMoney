@@ -81,13 +81,15 @@ const ProductDetailsForm: React.FC<ChildComponentProps> = ({func }) => {
                 requireloanAmount:
                     newValue < 1000
                         ? "Required loan amount must be at least ₹1000."
-                        : newValue >= formData.eligibleloanAmount
+                        : newValue > formData.eligibleloanAmount
                         ? "Required loan amount should be less than eligible loan amount."
-                        : formData.loanAmount && newValue >= Number(formData.loanAmount)
+                        : formData.loanAmount && newValue >Number(formData.loanAmount)
                         ? "Required loan amount should be less than product price."
-                        : "", // Set to an empty string instead of `undefined`
+                        : "", // Clear the error if all conditions pass
             }));
         }
+        
+        
         
     };
 

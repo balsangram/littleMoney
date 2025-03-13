@@ -97,7 +97,7 @@ const LoanApplyForm = () => {
                         
                                     {/* </div> */}
                                 </div>
-                                b
+                                
                                 {/* ==================form  */}
                                 <ProductDetailsForm func={setShowQR} />
                             </AccordionItemPanel>

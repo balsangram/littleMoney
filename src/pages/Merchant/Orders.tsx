@@ -22,7 +22,7 @@ const rowData = [
     { id: 6, status: 'Rejected', dateTime: '2025-03-12 03:20 PM', name: 'Rajesh Nair', phone: '4321098765' },
 ];
 
-// ✅ Create a functional component to manage collapsibility
+// Create a functional component to manage collapsibility
 const AccordionContent = ({ status }: { status: string }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const toggleExpand = () => setIsExpanded(!isExpanded);
