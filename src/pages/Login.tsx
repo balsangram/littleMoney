@@ -129,8 +129,8 @@ const Login = () => {
                 <div className="relative w-full max-w-[870px] rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,_#fff9f9_100%)] p-2 dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]">
                     <div className="relative flex flex-col justify-center rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 px-6 lg:min-h-[758px] py-20">
                         <div className="mx-auto w-full max-w-[440px]">
-                            <div>
-                                <img className='h-12' src="src/assets/logo/logo.png" alt="" />
+                            <div className="w-24 h-24">
+                                <img src="src/assets/logo/logo.png" alt="" className="w-full h-full object-contain" />
                             </div>
                             <div className="mb-10">
                                 <h1 className="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">Login</h1>
@@ -184,29 +184,28 @@ const Login = () => {
                                         <div>
                                             <label htmlFor="otp">OTP</label>
                                             <div className="flex gap-2 justify-evenly">
-                                            {[0, 1, 2, 3].map((index) => {  
-    const key = `otp${index}` as keyof FormValues;  
-    return (  
-        <input  
-            key={index}  
-            id={`otp${index}`}  
-            name={`otp${index}`}  
-            type="password"  
-            ref={(el: HTMLInputElement | null) => {  
-                if (el) {  
-                    inputRefs.current[index] = el;  
-                }  
-            }}  
-            value={formik.values[key]}  
-            onChange={(e) => handleChange(e, index)}  
-            onKeyDown={(e) => handleKeyDown(e, index)}  
-            maxLength={1}  
-            className="border rounded p-2 text-center"  
-            style={{ fontSize: '20px', width: '50px' }}  
-        />  
-    );  
-})}
-
+                                                {[0, 1, 2, 3].map((index) => {
+                                                    const key = `otp${index}` as keyof FormValues;
+                                                    return (
+                                                        <input
+                                                            key={index}
+                                                            id={`otp${index}`}
+                                                            name={`otp${index}`}
+                                                            type="password"
+                                                            ref={(el: HTMLInputElement | null) => {
+                                                                if (el) {
+                                                                    inputRefs.current[index] = el;
+                                                                }
+                                                            }}
+                                                            value={formik.values[key]}
+                                                            onChange={(e) => handleChange(e, index)}
+                                                            onKeyDown={(e) => handleKeyDown(e, index)}
+                                                            maxLength={1}
+                                                            className="border rounded p-2 text-center"
+                                                            style={{ fontSize: '20px', width: '50px' }}
+                                                        />
+                                                    );
+                                                })}
                                             </div>
                                             {(formik.touched.otp0 || formik.touched.otp1 || formik.touched.otp2 || formik.touched.otp3) &&
                                                 (formik.errors.otp0 || formik.errors.otp1 || formik.errors.otp2 || formik.errors.otp3) && (

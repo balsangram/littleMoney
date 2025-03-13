@@ -1,101 +1,187 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setPageTitle } from "../../store/themeConfigSlice";
-import { Link, NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPageTitle } from '../../store/themeConfigSlice';
+import { Link } from 'react-router-dom';
+import { IoIosArrowDropright, IoIosArrowDropdown } from 'react-icons/io';
+import { IoMdArrowDropdownCircle } from 'react-icons/io';
+import { IoMdArrowDroprightCircle } from 'react-icons/io';
+
+// Import your components
+import ViewProductDetails from '../../components/order_status/ViewProductDetails';
+import EmiDetails from '../../components/order_status/EmiDetails';
+import InvoiceDetails from '../../components/order_status/InvoiceDetails';
+import RemarkDetails from '../../components/order_status/RemarkDetails';
+import UTRDetails from '../../components/order_status/UTRDetails';
 
 const rowData = [
-    { id: 1, name: "Priya Verma", phone: "9876543210", Category: "Mobile", Brand: "Samsung", Model: "Galaxy S22", Amount: 75000, "Loan Amount": 50000, Tenure: "12 months", action: "emi" },
-    { id: 2, name: "Amit Sharma", phone: "8765432109", Category: "Laptop", Brand: "Dell", Model: "Inspiron 15", Amount: 60000, "Loan Amount": 40000, Tenure: "24 months", action: "add" },
-    { id: 3, name: "Rohit Singh", phone: "7654321098", Category: "TV", Brand: "Sony", Model: "Bravia 55 inch", Amount: 85000, "Loan Amount": 60000, Tenure: "6 months", action: "Rejected" },
-    { id: 4, name: "Neha Gupta", phone: "6543210987", Category: "Gadgets", Brand: "Apple", Model: "iPad Air", Amount: 50000, "Loan Amount": 30000, Tenure: "3 months", action: "emi" },
-    // { id: 6, name: "Vikram Patil", phone: "5432109876", Category: "Mobile", Brand: "OnePlus", Model: "OnePlus 11", Amount: 58000, "Loan Amount": 35000, Tenure: "12 months", action: "Processed" },
-    // { id: 7, name: "Vikram Patil", phone: "5432109876", Category: "Mobile", Brand: "OnePlus", Model: "OnePlus 11", Amount: 58000, "Loan Amount": 35000, Tenure: "12 months", action: "Processed" },
-    // { id: 8, name: "Vikram Patil", phone: "5432109876", Category: "Mobile", Brand: "OnePlus", Model: "OnePlus 11", Amount: 58000, "Loan Amount": 35000, Tenure: "12 months", action: "Processed" },
-    // { id: 9, name: "Vikram Patil", phone: "5432109876", Category: "Mobile", Brand: "OnePlus", Model: "OnePlus 11", Amount: 58000, "Loan Amount": 35000, Tenure: "12 months", action: "Processed" },
-
+    { id: 1, status: 'QR Generated', dateTime: '2025-03-12 10:30 AM', name: 'Priya Verma', phone: '9876543210' },
+    { id: 2, status: 'Processed', dateTime: '2025-03-12 11:00 AM', name: 'Amit Sharma', phone: '8765432109' },
+    { id: 3, status: 'Completed', dateTime: '2025-03-12 12:15 PM', name: 'Rohit Singh', phone: '7654321098' },
+    { id: 4, status: 'On Hold', dateTime: '2025-03-12 01:30 PM', name: 'Neha Gupta', phone: '6543210987' },
+    { id: 5, status: 'Settled', dateTime: '2025-03-12 02:45 PM', name: 'Vikram Patil', phone: '5432109876' },
+    { id: 6, status: 'Rejected', dateTime: '2025-03-12 03:20 PM', name: 'Rajesh Nair', phone: '4321098765' },
 ];
+
+// ✅ Create a functional component to manage collapsibility
+const AccordionContent = ({ status }: { status: string }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const toggleExpand = () => setIsExpanded(!isExpanded);
+
+    return (
+        <div>
+            {status === 'QR Generated' && <ViewProductDetails />}
+
+            {status === 'Processed' && (
+                <>
+                    <EmiDetails />
+                    <button className="text-blue-500 font-semibold mt-2 px-4 py-2 text-lg flex items-center gap-2" onClick={toggleExpand}>
+                        {isExpanded ?<> <IoMdArrowDropdownCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Hide details</button></> :<> <IoMdArrowDroprightCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">View more</button> </>}
+                        {/* {isExpanded ? <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Hide details</button> : <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">View more</button> } */}
+                    </button>
+                    {isExpanded && <ViewProductDetails />}
+                </>
+            )}
+
+            {status === 'Completed' && (
+                <>
+                    <InvoiceDetails />
+                    <button className="text-blue-500 font-semibold mt-2 px-4 py-2 text-lg flex items-center gap-2" onClick={toggleExpand}>
+                    {isExpanded ?<> <IoMdArrowDropdownCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Hide details</button></> :<> <IoMdArrowDroprightCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">View more</button> </>}
+                    </button>
+                    {isExpanded && (
+                        <>
+                            <EmiDetails />
+                            <ViewProductDetails />
+                        </>
+                    )}
+                </>
+            )}
+
+            {status === 'On Hold' && (
+                <>
+                    <RemarkDetails />
+                    <button className="text-blue-500 font-semibold mt-2 px-4 py-2 text-lg flex items-center gap-2" onClick={toggleExpand}>
+                    {isExpanded ?<> <IoMdArrowDropdownCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Hide details</button></> :<> <IoMdArrowDroprightCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">View more</button> </>}
+                    </button>
+
+                    {isExpanded && (
+                        <>
+                            <EmiDetails />
+                            <ViewProductDetails />
+                        </>
+                    )}
+                </>
+            )}
+
+            {status === 'Settled' && (
+                <>
+                    <UTRDetails />
+                    <button className="text-blue-500 font-semibold mt-2 px-4 py-2 text-lg flex items-center gap-2" onClick={toggleExpand}>
+                    {isExpanded ?<> <IoMdArrowDropdownCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Hide details</button></> :<> <IoMdArrowDroprightCircle className="text-2xl" /><button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">View more</button> </>}
+                    </button>
+                    {isExpanded && (
+                        <>
+                            <InvoiceDetails />
+                            <EmiDetails />
+                            <ViewProductDetails />
+                        </>
+                    )}
+                </>
+            )}
+
+            {status === 'Rejected' && <p className="text-red-500 font-semibold">Loan not approved!!</p>}
+        </div>
+    );
+};
 
 const Orders = () => {
     const dispatch = useDispatch();
+    const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
     useEffect(() => {
-        dispatch(setPageTitle("Orders"));
+        dispatch(setPageTitle('Orders'));
     }, [dispatch]);
 
+    const toggleRow = (id: number) => {
+        setExpandedRow(expandedRow === id ? null : id);
+    };
+
+    const getStatusButton = (status: string) => {
+        let btnClass = 'btn btn-outline-primary btn-sm rounded-full'; // Default color
+        if (status === 'Completed') btnClass = 'btn btn-outline-success btn-sm rounded-full';
+        else if (status === 'Rejected') btnClass = 'btn btn-outline-danger btn-sm rounded-full';
+        else if (status === 'On Hold') btnClass = 'btn btn-outline-warning btn-sm rounded-full';
+
+        return (
+            <button type="button" className={btnClass} disabled={status === 'Rejected'}>
+                {status}
+            </button>
+        );
+    };
+
+    const columns = [
+        { accessor: 'id', title: 'ID', sortable: true },
+        { accessor: 'status', title: 'Status', sortable: true, render: ({ status }: { status: string }) => getStatusButton(status) },
+        { accessor: 'dateTime', title: 'Date & Time', sortable: true },
+        { accessor: 'name', title: 'Name', sortable: true },
+        { accessor: 'phone', title: 'Phone', sortable: true },
+        {
+            accessor: 'details',
+            title: 'Details',
+            sortable: false,
+            render: ({ id }: { id: number }) => (
+                <button onClick={() => toggleRow(id)} className="text-xl focus:outline-none">
+                    {expandedRow === id ? <IoIosArrowDropdown /> : <IoIosArrowDropright />}
+                </button>
+            ),
+        },
+    ];
+
     return (
-        <div className="p-6 min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100">
-            {/* Breadcrumb */}
-            <nav className="mb-6">
-                <ul className="flex items-center space-x-2 text-gray-600 text-sm">
-                    <li>
-                        <Link to="/merchant" className="hover:text-blue-600 font-medium">
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li className="text-gray-400">/</li>
-                    <li className="text-blue-600 font-semibold">Orders</li>
-                </ul>
-            </nav>
-
-            {/* Orders Grid */}
-            <motion.div
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-            >
-                {rowData.map((order, index) => (
-                    <motion.div
-                        key={order.id}
-                        className="bg-white p-6 shadow-lg rounded-2xl border border-gray-200"
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-                        whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-                    >
-                        {/* Order Details */}
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">{order.name}</h3>
-                        <p className="text-gray-600 text-sm">📞 {order.phone}</p>
-                        <p className="text-gray-600 text-sm">📌 {order.Category} - {order.Brand} ({order.Model})</p>
-                        <p className="text-gray-700 font-semibold mt-2">💰 Amount: ₹{order.Amount.toLocaleString()}</p>
-                        <p className="text-gray-700 font-semibold">🏦 Loan Amount: ₹{order["Loan Amount"].toLocaleString()}</p>
-                        <p className="text-gray-500">⏳ Tenure: {order.Tenure}</p>
-
-                        {/* Action Buttons */}
-                        <div className="mt-4">
-                            {order.action === "add" ? (
-                                <NavLink to="/merchant/orders/add-product-details">
-                                    <motion.button
-                                        className="w-full flex items-center justify-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                         Add Product Details
-                                    </motion.button>
-                                </NavLink>
-                            ) : order.action === "emi" ? (
-                                <NavLink to="/merchant/orders/view-emi-details">
-                                    <motion.button
-                                        className="w-full flex items-center justify-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                    >
-                                         QR Code Generated
-                                    </motion.button>
-                                </NavLink>
-                            ) : (
-                                <motion.button
-                                    className="w-full flex items-center justify-center bg-red-500 text-white py-2 rounded-lg cursor-not-allowed"
-                                    whileHover={{ scale: 1.05 }}
-                                >
-                                     Rejected
-                                </motion.button>
-                            )}
-                        </div>
-                    </motion.div>
-                ))}
-            </motion.div>
+        <div>
+            <ul className="flex space-x-2 rtl:space-x-reverse">
+                <li>
+                    <Link to="/merchant" className="text-primary hover:underline">
+                        Dashboard
+                    </Link>
+                </li>
+                <li className="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
+                    <span>Orders</span>
+                </li>
+            </ul>
+            <div>
+                <table className="w-full border-collapse border border-gray-200">
+                    <thead>
+                        <tr>
+                            {columns.map((col) => (
+                                <th key={col.accessor} className="border border-gray-300 p-2">
+                                    {col.title}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rowData.map((row) => (
+                            <React.Fragment key={row.id}>
+                                <tr className="border border-gray-300">
+                                    {columns.map((col) => (
+                                        <td key={col.accessor} className="border border-gray-300 p-2">
+                                            {col.render ? col.render(row) : row[col.accessor as keyof typeof row]}
+                                        </td>
+                                    ))}
+                                </tr>
+                                {expandedRow === row.id && (
+                                    <tr>
+                                        <td colSpan={columns.length} className="border border-gray-300 p-2">
+                                            <AccordionContent status={row.status} />
+                                        </td>
+                                    </tr>
+                                )}
+                            </React.Fragment>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

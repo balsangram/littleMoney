@@ -5,9 +5,9 @@ interface FormData {
     category: string;
     brand: string;
     model: string;
-    loanAmount: string;
+    loanAmount: number;
     eligibleloanAmount: number;
-    requireloanAmount: string;
+    requireloanAmount: number;
     tenure: string;
     emi: string;
     serialNo: string;
@@ -31,9 +31,9 @@ const ProductDetailsForm: React.FC<ChildComponentProps> = ({func }) => {
         category: '',
         brand: '',
         model: '',
-        loanAmount: '',
+        loanAmount: 0,
         eligibleloanAmount: 15000,
-        requireloanAmount: '',
+        requireloanAmount: 15000,
         tenure: '',
         emi: '',
         serialNo: '',
@@ -72,8 +72,23 @@ const ProductDetailsForm: React.FC<ChildComponentProps> = ({func }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { id, value } = e.target;
+        const newValue =Number(value)
         setFormData({ ...formData, [id]: value });
-        setErrors({ ...errors, [id]: '' });
+        // setErrors({ ...errors, [id]: '' });
+        if (id === "requireloanAmount") {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                requireloanAmount:
+                    newValue < 1000
+                        ? "Required loan amount must be at least ₹1000."
+                        : newValue >= formData.eligibleloanAmount
+                        ? "Required loan amount should be less than eligible loan amount."
+                        : formData.loanAmount && newValue >= Number(formData.loanAmount)
+                        ? "Required loan amount should be less than product price."
+                        : "", // Set to an empty string instead of `undefined`
+            }));
+        }
+        
     };
 
     const handleTenureChange = (selectedTenure: string) => {
@@ -96,65 +111,65 @@ const ProductDetailsForm: React.FC<ChildComponentProps> = ({func }) => {
         }));
     };
 
-    const validateForm = () => {
-        let isValid = true;
-        const newErrors = { ...errors };
+    // const validateForm = () => {
+    //     let isValid = true;
+    //     const newErrors = { ...errors };
 
-        if (!formData.category) {
-            newErrors.category = 'Category is required';
-            isValid = false;
-        }
-        if (!formData.brand) {
-            newErrors.brand = 'Brand is required';
-            isValid = false;
-        }
-        if (!formData.model) {
-            newErrors.model = 'Model is required';
-            isValid = false;
-        }
-        if (!formData.loanAmount) {
-            newErrors.loanAmount = 'Product price is required';
-            isValid = false;
-        }
-        if (!formData.requireloanAmount) {
-            newErrors.requireloanAmount = 'Required loan amount is required';
-            isValid = false;
-        }
-        if (Number(formData.requireloanAmount) < 1000) {
-            newErrors.requireloanAmount = 'Minimum loan amount required: ₹1000.';
-            isValid = false;
-        }
-        if (Number(formData.requireloanAmount) > formData.eligibleloanAmount) {
-            newErrors.requireloanAmount = 'Requested loan amount must not exceed the eligible loan limit.';
-            isValid = false;
-        }
-        if (Number(formData.requireloanAmount) > Number(formData.loanAmount)) {
-            newErrors.requireloanAmount = 'Requested loan amount cannot exceed the eligible product amount.';
-            isValid = false;
-        }
-        if (!formData.tenure) {
-            newErrors.tenure = 'Tenure is required';
-            isValid = false;
-        }
-        if (!formData.emi) {
-            newErrors.emi = 'EMI is required';
-            isValid = false;
-        }
-        if (!formData.serialNo) {
-            newErrors.serialNo = 'Serial number is required';
-            isValid = false;
-        }
+    //     if (!formData.category) {
+    //         newErrors.category = 'Category is required';
+    //         isValid = false;
+    //     }
+    //     if (!formData.brand) {
+    //         newErrors.brand = 'Brand is required';
+    //         isValid = false;
+    //     }
+    //     if (!formData.model) {
+    //         newErrors.model = 'Model is required';
+    //         isValid = false;
+    //     }
+    //     if (!formData.loanAmount) {
+    //         newErrors.loanAmount = 'Product price is required';
+    //         isValid = false;
+    //     }
+    //     if (!formData.requireloanAmount) {
+    //         newErrors.requireloanAmount = 'Required loan amount is required';
+    //         isValid = false;
+    //     }
+    //     if (Number(formData.requireloanAmount) < 1000) {
+    //         newErrors.requireloanAmount = 'Minimum loan amount required: ₹1000.';
+    //         isValid = false;
+    //     }
+    //     if (Number(formData.requireloanAmount) > formData.eligibleloanAmount) {
+    //         newErrors.requireloanAmount = 'Requested loan amount must not exceed the eligible loan limit.';
+    //         isValid = false;
+    //     }
+    //     if (Number(formData.requireloanAmount) > Number(formData.loanAmount)) {
+    //         newErrors.requireloanAmount = 'Requested loan amount cannot exceed the eligible product amount.';
+    //         isValid = false;
+    //     }
+    //     if (!formData.tenure) {
+    //         newErrors.tenure = 'Tenure is required';
+    //         isValid = false;
+    //     }
+    //     if (!formData.emi) {
+    //         newErrors.emi = 'EMI is required';
+    //         isValid = false;
+    //     }
+    //     if (!formData.serialNo) {
+    //         newErrors.serialNo = 'Serial number is required';
+    //         isValid = false;
+    //     }
 
-        setErrors(newErrors);
-        return isValid;
-    };
+    //     setErrors(newErrors);
+    //     return isValid;
+    // };
 
     const handleFormSubmission = (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!validateForm()) {
-            return;
-        }
+        // if (!validateForm()) {
+        //     return;
+        // }
 
         Swal.fire({
             title: 'Product details added successfully!',
@@ -229,7 +244,22 @@ const ProductDetailsForm: React.FC<ChildComponentProps> = ({func }) => {
                         </select>
                         {errors.model && <p className="text-red-500 text-sm mt-1">{errors.model}</p>}
                     </div>
-
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div>
+                        <label htmlFor="serialNo" className="block text-sm font-medium text-gray-700">
+                            Serial Number
+                        </label>
+                        <input
+                            type="number"
+                            id="serialNo"
+                            value={formData.serialNo}
+                            onChange={handleChange}
+                            placeholder="Serial Number..."
+                            className={`mt-1 block w-full p-2 border rounded-md ${errors.serialNo ? 'border-red-500' : 'border-gray-300'}`}
+                        />
+                        {errors.serialNo && <p className="text-red-500 text-sm mt-1">{errors.serialNo}</p>}
+                    </div>
+                </div>
                     <div>
                         <label htmlFor="loanAmount" className="block text-sm font-medium text-gray-700">
                             Product Price
@@ -246,46 +276,36 @@ const ProductDetailsForm: React.FC<ChildComponentProps> = ({func }) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="serialNo" className="block text-sm font-medium text-gray-700">
-                            Serial Number
-                        </label>
-                        <input
-                            type="number"
-                            id="serialNo"
-                            value={formData.serialNo}
-                            onChange={handleChange}
-                            placeholder="Serial Number..."
-                            className={`mt-1 block w-full p-2 border rounded-md ${errors.serialNo ? 'border-red-500' : 'border-gray-300'}`}
-                        />
-                        {errors.serialNo && <p className="text-red-500 text-sm mt-1">{errors.serialNo}</p>}
-                    </div>
-                </div>
+            
                 <h2 className="text-2xl">Loan Details</h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="requireloanAmount" className="block text-sm font-medium text-gray-700">
-                            Required Loan Amount <span className="text-gray-500">(Minimum ₹1000)</span>
-                        </label>
-                        <input
-                            type="number"
-                            id="requireloanAmount"
-                            value={formData.requireloanAmount}
-                            onChange={handleChange}
-                            placeholder="Loan Amount..."
-                            className={`mt-1 block w-full p-2 border rounded-md ${errors.requireloanAmount ? 'border-red-500' : 'border-gray-300'}`}
-                        />
-                        {errors.requireloanAmount && <p className="text-red-500 text-sm mt-1">{errors.requireloanAmount}</p>}
-                    </div>
-                    <div>
-                        <label className="text-base mt-8 text-green-500" htmlFor="eligibleloanAmount">
-                            Eligible Loan Amount ₹ {formData.eligibleloanAmount}
-                        </label>
-                        {/* <p className="p-2 bg-gray-200 pl-5 rounded-md">{formData.eligibleloanAmount}</p> */}
-                    </div>
-                </div>
+    {/* Required Loan Amount */}
+    <div>
+    <label htmlFor="requireloanAmount" className="block text-sm font-medium text-gray-700">
+                    Required Loan Amount <span className="text-gray-500">(Minimum ₹1000)</span>
+                </label>
+                <input
+                    type="number"
+                    id="requireloanAmount"
+                    value={formData.requireloanAmount}
+                    onChange={handleChange}
+                    placeholder="Loan Amount..."
+                    className={`mt-1 block w-full p-2 border rounded-md ${
+                        errors.requireloanAmount ? "border-red-500" : "border-gray-300"
+                    }`}
+                />
+                {errors.requireloanAmount && <p className="text-red-500 text-sm mt-1">{errors.requireloanAmount}</p>}
+    </div>
+
+    {/* Eligible Loan Amount */}
+    <div>
+        <label className="text-base mt-8 text-green-500" htmlFor="eligibleloanAmount">
+            Eligible Loan Amount ₹ {formData.eligibleloanAmount}
+        </label>
+    </div>
+</div>
+
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Tenure</label>
                     <div className="flex flex-wrap gap-4 mt-2">

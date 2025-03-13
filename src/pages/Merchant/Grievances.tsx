@@ -16,15 +16,25 @@ const MerchantSupport = () => {
         dispatch(setPageTitle('Support'));
     }, [dispatch]);
 
-    const handleChange = (e) => {
-        const { id, value, files } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [id]: files ? files[0] : value, // Handle file uploads
-        }));
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { id, value } = e.target; // Extract id and value
+    
+        if ((e.target as HTMLInputElement).files) {
+            const files = (e.target as HTMLInputElement).files;
+            setFormData((prev) => ({
+                ...prev,
+                [id]: files ? files[0] : value, // Handle file uploads
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                [id]: value, // Handle normal inputs & selects
+            }));
+        }
     };
-
-    const handleSubmit = (e) => {
+    
+    
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!formData.title || !formData.category || !formData.query) {
             alert('Please fill all required fields.');
@@ -33,6 +43,7 @@ const MerchantSupport = () => {
         console.log('Form Data:', formData);
         // Add logic to submit the form data (e.g., API call)
     };
+    
 
     return (
         <div className="mb-16">

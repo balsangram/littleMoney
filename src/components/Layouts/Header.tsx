@@ -80,7 +80,7 @@ const Header = () => {
     }
 
     const [isOpen, setIsOpen] = useState(false);
-    const modalRef = useRef(null);
+    const modalRef = useRef<HTMLDivElement | null>(null); // Explicit type
 
     // Function to close modal when clicking outside
     useEffect(() => {
@@ -89,13 +89,16 @@ const Header = () => {
                 setIsOpen(false);
             }
         }
+
         if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener("mousedown", handleClickOutside);
         }
+
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isOpen]);
+
 
     const location = useLocation();
     useEffect(() => {
